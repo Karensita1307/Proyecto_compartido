@@ -31,19 +31,27 @@ public class Entrenador {
 
     public void setAtaques() {
         Ataques_P ListaAtaques[] = Ataques_P.values();
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("selecciona cuatro ataques :");
+        System.out.println("Ataques disponibles:");
+                for(Ataques_P ataque: Ataques_P.values()){
+                    System.out.println("-" + ataque);
+                }
         for (int i = 0; i < 4; i++) {
-            System.out.println("Ingresa cuatro ataques (uno por uno):");
-            for(Ataques_P ataque: Ataques_P.values()){
-            if(ataque != null)
-                System.out.println("-" + ataque);
-            }
-            try (Scanner scanner = new Scanner(System.in)) {
-                String ataqueS = scanner.next();
-                Ataques_P ataquen = Ataques_P.valueOf(ataqueS);
-                ataques.add(ataquen);
-                ListaAtaques[Arrays.binarySearch(ListaAtaques, ataquen)] = null;
+            while (true) {
+                System.out.print("Selecciona un ataque: ");
+                String ataqueS = scanner.nextLine();
+                try{
+                    Ataques_P ataqueSeleccionado = Ataques_P.valueOf(ataqueS);
+                    ataques.add(ataqueSeleccionado);//Agregar el ataque seleccionado a la lista
+                    break; // Salir del bucle si el tipo es valido
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Ataque no válido. Intenta de nuevo.");
+                }
             }
         }
+        System.out.println("Has elegido: " + ataques);
     }
 
     public void setTipos() {
