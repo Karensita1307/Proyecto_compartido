@@ -42,9 +42,9 @@ public class Main {
                     poke2.setTipos();
                     poke2.setAtaques();
 
-                    //Datos finales del primer entrenador 
-                    System.out.println("Entrenador 1: " + poke2.getNombre());
-                    System.out.println("Equipo 1: " + poke2.getEquipo());
+                    //Datos finales del segundo entrenador 
+                    System.out.println("Entrenador 2: " + poke2.getNombre());
+                    System.out.println("Equipo 2: " + poke2.getEquipo());
                     System.out.println("Tipos: " + poke2.getTipos());
                     System.out.println("Ataques: " + poke2.getAtaques());
                     break;
