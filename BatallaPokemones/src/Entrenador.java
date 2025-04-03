@@ -11,8 +11,6 @@ public class Entrenador {
     private ArrayList <Ataques_P> ataques = new ArrayList<>();
     private ArrayList <Tipos_P> tipos = new ArrayList<>();
 
-   
-
     public Entrenador(String nombre, String equipo) {
         this.nombre = nombre;
         this.equipo = equipo;
@@ -95,9 +93,6 @@ public class Entrenador {
     public ArrayList<Tipos_P> getTipos() {
         return tipos;
     }
-    
 
 
-
-
-}
+}  
