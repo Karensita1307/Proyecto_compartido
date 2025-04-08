@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import utils.Tipos_P;
-import utils.Ataques_P;
 
 public class Pokemon {
     //Atributos
@@ -10,6 +9,8 @@ public class Pokemon {
     private ArrayList <String> puntosSalud = new ArrayList<>();
     private ArrayList <Tipos_P> tipos = new ArrayList<>();
     private ArrayList <String> ataques = new ArrayList<>();
+    //Scanner para leer la información del usuario
+    Scanner scanner = new Scanner(System.in);
 
     //Recolectamos la información total de los Pokémones
     private ArrayList <String> infoPoke1 = new ArrayList<>();
@@ -17,11 +18,63 @@ public class Pokemon {
     private ArrayList <String> infoPoke3 = new ArrayList<>();
 
     //Metodos
-    public void atacar(){
-        System.out.println("Nada por el momento");
+    public void atacar(ArrayList<String> ataque1, ArrayList<String> ataque2){
+        //Verificamos que el ataque se encuentre en la lista
+        String ataqueElegido;
+        ArrayList<String> infoAtaque1 = new ArrayList<>(); //Lista que agrupa la información total del ataque
+        boolean encontrado = false;
+        do {
+            System.out.print("Por favor, escoge un ataque:");
+            ataqueElegido = scanner.nextLine();
+            for (int i = 0; i < ataque1.size(); i++) {
+                if (ataque1.get(i).equalsIgnoreCase(ataqueElegido)) {
+                    System.out.println(ataque1.get(0) + " ha decidido atacar con " + ataqueElegido);
+                    //Agregamos información del ataque a la lista
+                    infoAtaque1.add(ataqueElegido);
+                    infoAtaque1.add(ataque1.get(i+1));
+                    if(ataque1.size() < 12){
+                        infoAtaque1.add(ataque1.get(11));
+                    }
+                    encontrado = true;
+                    break;
+                }
+            }
+            if (!encontrado) {
+                System.out.println("Ataque no encontrado. Intenta nuevamente.");
+            }
+        } while (!encontrado);
     }
     public void recibirDaño(){
         System.out.println("Nada por el momento");
+    }
+
+    public void comparacionPoke(ArrayList<String> poke1, ArrayList<String> poke2){
+        //Ventajas respecto a tipos
+        if(poke1.get(1).equals("AGUA") && poke2.get(1).equals("FUEGO")||poke2.get(1).equals("TIERRA")){
+            poke1.add("Ventaja");
+        } else if(poke1.get(1).equals("BICHO") && poke2.get(1).equals("PSIQUICO")||poke2.get(1).equals("SINIESTRO")){
+            poke1.add("Ventaja");
+        } else if(poke1.get(1).equals("ELECTRICO") && poke2.get(1).equals("AGUA")){
+            poke1.add("Ventaja");
+        } else if(poke1.get(1).equals("PSIQUICO") && poke2.get(1).equals("VENENO")){
+            poke1.add("Ventaja");
+        } else if(poke1.get(1).equals("TIERRA") && poke2.get(1).equals("FUEGO")||poke2.get(1).equals("ELECTRICO")||poke2.get(1).equals("VENENO")){
+            poke1.add("Ventaja");
+        } else if(poke1.get(1).equals("FUEGO") && poke2.get(1).equals("BICHO")){
+            poke1.add("Ventaja");
+        } else if(poke1.get(1).equals("SINIESTRO") && poke2.get(1).equals("PSIQUICO")){
+            poke1.add("Ventaja");
+        }
+        //Comparar HP
+        int valor1 = Integer.parseInt(poke1.get(2));
+        int valor2 = Integer.parseInt(poke2.get(2));
+        if(valor1 <= valor2){
+            System.out.println("La batalla sera iniciada por " + poke1.get(0));
+            atacar(poke1,poke2);
+        } else {
+            System.out.println("La batalla sera iniciada por " + poke2.get(0));
+            atacar(poke2,poke1);
+        }
     }
     
     //Constructor 
@@ -68,7 +121,6 @@ public class Pokemon {
     }
     public void setAtaques(){
         System.out.println("----Ataques de los Pokémones----");
-        Scanner scanner = new Scanner(System.in);
         for(int i = 0; i < 4; i++){
             System.out.println("Pokémon " +(i+1) +": ");
             System.out.print("Ingrese el nombre del ataque: ");
@@ -105,7 +157,6 @@ public class Pokemon {
 
     public void setPuntosSalud() {
         System.out.println("----Puntos de Salud de los Pokémones----");
-        Scanner scanner = new Scanner(System.in);
         for (int i = 0; i < 3; i++) {
             System.out.print("Ingrese la vida del Pokémon " +(i+1) +" (Máx 100): ");
             String entrada = scanner.nextLine();
@@ -122,45 +173,31 @@ public class Pokemon {
             }
         }
     }
+    //Metodo para agregar los ataques
+    public void agregarAtaques(ArrayList<String> listaPoke){
+        int[] posicionAtaque = {0, 2, 3, 5, 6, 8, 9, 11};
+        for (int i : posicionAtaque) {
+            listaPoke.add(ataques.get(i));
+        }
+    }
 
     public void setInfoPoke1(){
         infoPoke1.add(nombre.get(0));
         infoPoke1.add(String.valueOf(tipos.get(0)));
         infoPoke1.add(puntosSalud.get(0));
-        infoPoke1.add(ataques.get(0));
-        infoPoke1.add(ataques.get(2));
-        infoPoke1.add(ataques.get(3));
-        infoPoke1.add(ataques.get(5));
-        infoPoke1.add(ataques.get(6));
-        infoPoke1.add(ataques.get(8));
-        infoPoke1.add(ataques.get(9));
-        infoPoke1.add(ataques.get(11));
+        agregarAtaques(infoPoke1);
     }
     public void setInfoPoke2(){
         infoPoke2.add(nombre.get(1));
         infoPoke2.add(String.valueOf(tipos.get(1)));
         infoPoke2.add(puntosSalud.get(1));
-        infoPoke2.add(ataques.get(0));
-        infoPoke2.add(ataques.get(2));
-        infoPoke2.add(ataques.get(3));
-        infoPoke2.add(ataques.get(5));
-        infoPoke2.add(ataques.get(6));
-        infoPoke2.add(ataques.get(8));
-        infoPoke2.add(ataques.get(9));
-        infoPoke2.add(ataques.get(11));
+        agregarAtaques(infoPoke2);
     }
     public void setInfoPoke3(){
         infoPoke3.add(nombre.get(2));
         infoPoke3.add(String.valueOf(tipos.get(2)));
         infoPoke3.add(puntosSalud.get(2));
-        infoPoke3.add(ataques.get(0));
-        infoPoke3.add(ataques.get(2));
-        infoPoke3.add(ataques.get(3));
-        infoPoke3.add(ataques.get(5));
-        infoPoke3.add(ataques.get(6));
-        infoPoke3.add(ataques.get(8));
-        infoPoke3.add(ataques.get(9));
-        infoPoke3.add(ataques.get(11));
+        agregarAtaques(infoPoke3);
     }
 
     //Getters

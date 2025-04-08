@@ -18,13 +18,14 @@ public class Main {
 
             switch (option) {
                 case 1:
-                    //Datos del primer entrenador
+                    //Crear el primer entrenador
                     System.out.print("Ingrese el nombre del primer entrenador: ");
                     String nombreEntrenador1 = scanner.nextLine();
                     System.out.print("Ingrese el nombre del equipo: ");
                     String nombreEquipo1 = scanner.nextLine();
                     Entrenador entrenador1 = new Entrenador(nombreEntrenador1, nombreEquipo1);
                     Pokemon pokeEntrenador1 = new Pokemon();
+                    //Crear primer equipo Pokémon
                     pokeEntrenador1.setTipos();
                     pokeEntrenador1.setNombre();
                     pokeEntrenador1.setPuntosSalud();
@@ -46,6 +47,7 @@ public class Main {
                     String nombreEquipo2 = scanner.nextLine();
                     Entrenador entrenador2 = new Entrenador(nombreEntrenador2, nombreEquipo2);
                     Pokemon pokeEntrenador2 = new Pokemon();
+                    //Crear segundo equipo Pokémon
                     pokeEntrenador2.setTipos();
                     pokeEntrenador2.setNombre();
                     pokeEntrenador2.setPuntosSalud();
@@ -69,12 +71,14 @@ public class Main {
                     System.out.println("Entrenadores, ¡Preparence!");
                     System.out.println("¡¡¡Que Empiece La Batalla!!!");
                     System.out.println(entrenador1.getNombre() +", elige tu Pokémon! ");
+                    //Muestra equipo Pokémon
                     System.out.println(pokeEntrenador1.getInfoPoke1());
                     System.out.println(pokeEntrenador1.getInfoPoke2());
                     System.out.println(pokeEntrenador1.getInfoPoke3());
                     System.out.print("Elige una opción del 1 al 3: ");
                     String entrada = scanner.nextLine();
                     int opc = Integer.parseInt(entrada);
+                    //Mandamos lista a metodo de entrenador
                     while(true){
                         if(opc == 1){
                             entrenador1.setPokemonElegido1(pokeEntrenador1.getInfoPoke1());
@@ -98,12 +102,14 @@ public class Main {
                     pokeEntrenador2.setInfoPoke3();
 
                     System.out.println(entrenador2.getNombre() +", elige tu Pokémon! ");
+                    //Muestra equipo Pokémon
                     System.out.println(pokeEntrenador2.getInfoPoke1());
                     System.out.println(pokeEntrenador2.getInfoPoke2());
                     System.out.println(pokeEntrenador2.getInfoPoke3());
                     System.out.print("Elige una opción del 1 al 3: ");
                     String entrada1 = scanner.nextLine();
                     int opc1 = Integer.parseInt(entrada1);
+                    //Mandamos lista a metodo de entrenador
                     while(true){
                         if(opc1 == 1){
                             entrenador2.setPokemonElegido2(pokeEntrenador2.getInfoPoke1());
@@ -120,15 +126,18 @@ public class Main {
                             opc1 = Integer.parseInt(entrada1);
                         }
                     }
+                    //Mandamos parametros a metodo de Pokémon
+                    pokeEntrenador1.comparacionPoke(entrenador1.getPokemonElegido1(), entrenador2.getPokemonElegido2());
                     break;
                 case 2:
-                    //Datos del primer entrenador random
+                    //Crear el primer entrenador random
                     System.out.print("Ingrese el nombre del primer entrenador: ");
                     String nombreEntrenadorR1 = scanner.nextLine();
                     System.out.print("Ingrese el nombre del equipo: ");
                     String nombreEquipoR1 = scanner.nextLine();
                     Entrenador entrenadorR1 = new Entrenador(nombreEntrenadorR1, nombreEquipoR1);
                     EquipoRandom equipoRandom1 = new EquipoRandom();
+                    //Crear equipo Pokémon
                     equipoRandom1.setNombre();
                     equipoRandom1.setTiposRandom();
                     equipoRandom1.setPuntosSaludRandom();
@@ -136,32 +145,33 @@ public class Main {
 
                     //Muestra de datos del primer entrenador random
                     System.out.println("----Información del Entrenador 1----");
-                    System.out.println("Entrenador 1: " + entrenadorR1.getNombre());
-                    System.out.println("Equipo 1: " + entrenadorR1.getEquipo());
-                    System.out.println("Tipos: " + equipoRandom1.getTipos());
-                    System.out.println("Nombres: " + equipoRandom1.getNombre());
-                    System.out.println("Vidas: " + equipoRandom1.getPuntosSaludRandom());
+                    System.out.println("Entrenador: " + entrenadorR1.getNombre());
+                    System.out.println("Equipo: " + entrenadorR1.getEquipo());
+                    System.out.println("Nombres de los Pokémones: " + equipoRandom1.getNombre());
+                    System.out.println("Tipos: " + equipoRandom1.getTiposRandom());
+                    System.out.println("HP: " + equipoRandom1.getPuntosSaludRandom());
                     System.out.println("Ataques: " + equipoRandom1.getAtaquesRandom());
 
-                    //Datos del segundo entrenador random
-                    System.out.println("----Información del Entrenador 2----");
+                    //Crea el segundo entrenador random
                     System.out.print("Ingrese el nombre del segundo entrenador: ");
                     String nombreEntrenadorR2 = scanner.nextLine();
                     System.out.print("Ingrese el nombre del equipo: ");
                     String nombreEquipoR2 = scanner.nextLine();
                     Entrenador entrendorR2 = new Entrenador(nombreEntrenadorR2, nombreEquipoR2);
                     EquipoRandom equipoRandom2 = new EquipoRandom();
+                    //Crea equipo Pokémon
                     equipoRandom2.setNombre();
                     equipoRandom2.setTiposRandom();
                     equipoRandom2.setPuntosSaludRandom();
                     equipoRandom2.setAtaquesRandom();
 
                     //Muestra de datos del primer entrenadorR2 random
-                    System.out.println("Entrenador 2: " + entrendorR2.getNombre());
-                    System.out.println("Equipo 2: " + entrendorR2.getEquipo());
-                    System.out.println("Tipos: " + equipoRandom2.getTipos());
-                    System.out.println("Nombres: " + equipoRandom2.getNombre());
-                    System.out.println("Vidas: " + equipoRandom2.getPuntosSaludRandom());
+                    System.out.println("----Información del Entrenador 2----");
+                    System.out.println("Entrenador: " + entrendorR2.getNombre());
+                    System.out.println("Equipo: " + entrendorR2.getEquipo());
+                    System.out.println("Nombres de los Pokémones: " + equipoRandom2.getNombre());
+                    System.out.println("Tipos: " + equipoRandom2.getTiposRandom());
+                    System.out.println("HP: " + equipoRandom2.getPuntosSaludRandom());
                     System.out.println("Ataques: " + equipoRandom2.getAtaquesRandom());
                     break;
                 case 3:

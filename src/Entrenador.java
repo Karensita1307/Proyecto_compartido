@@ -6,11 +6,13 @@ import utils.Ataques_P;
 import utils.Tipos_P;
 
 public class Entrenador {
+    //Atributos
     private String nombre;
     private String equipo;
     private ArrayList<String> pokemonElegido1 = new ArrayList<>();
     private ArrayList<String> pokemonElegido2 = new ArrayList<>();
 
+    //Constructor
     public Entrenador(String nombre, String equipo) {
         this.nombre = nombre;
         this.equipo = equipo;
@@ -18,17 +20,9 @@ public class Entrenador {
         pokemonElegido2 = new ArrayList<>();
     }
 
-    public String getNombre() {
-
-        return nombre;
-    }
-
+    //Setters
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public String getEquipo() {
-        return equipo;
     }
 
     public void setEquipo(String equipo) {
@@ -45,10 +39,17 @@ public class Entrenador {
         System.out.println("¡Bien! Has escogido a " +pokemonElegido2.get(0));
     }
 
+    //Getters
     public ArrayList<String> getPokemonElegido1() {
         return pokemonElegido1;
     }
     public ArrayList<String> getPokemonElegido2() {
         return pokemonElegido2;
+    }
+    public String getNombre() {
+        return nombre;
+    }
+    public String getEquipo() {
+        return equipo;
     }
 }
