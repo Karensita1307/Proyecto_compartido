@@ -4,53 +4,35 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="61719a51-4d66-457d-9ab9-5bd617c11e1d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Demo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Demo.java" afterDir="false" />
+    <list default="true" id="8da0dab7-ad7f-42f1-af78-44dd9d25849d" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/GeneradorAleatorio.java" beforeDir="false" afterPath="$PROJECT_DIR$/GeneradorAleatorio.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Pokemon.java" beforeDir="false" afterPath="$PROJECT_DIR$/Pokemon.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;Karencita17&quot;
-  }
-}</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;git@github.com:Karensita1307/Proyecto_compartido.git&quot;,
-    &quot;accountId&quot;: &quot;fe58373a-6b5a-4e84-8b89-990d0550a7c6&quot;
-  }
-}</component>
   <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 3
+  &quot;associatedIndex&quot;: 8
 }</component>
-  <component name="ProjectId" id="2wMhvSq7ZlRl2nChGUyorgb3lxy" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectId" id="2wZ1iAyneACZM9Gy2JfudxHvgqb" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
-    &quot;Application.Demo.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;karen/Miniproyecto2&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Proyecto/terminado&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/tadab/OneDrive/Desktop/Proyecto_compartido-Proyecto-terminado&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -59,11 +41,6 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Q-USER\Desktop\Miniproyecto-2" />
-    </key>
-  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -75,15 +52,13 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="61719a51-4d66-457d-9ab9-5bd617c11e1d" name="Changes" comment="" />
-      <created>1745857583979</created>
+      <changelist id="8da0dab7-ad7f-42f1-af78-44dd9d25849d" name="Changes" comment="" />
+      <created>1746234407735</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1745857583979</updated>
-      <workItem from="1745857590584" duration="3550000" />
-      <workItem from="1745891158593" duration="651000" />
-      <workItem from="1745892077924" duration="6335000" />
-      <workItem from="1745954469245" duration="4544000" />
+      <updated>1746234407735</updated>
+      <workItem from="1746234409391" duration="7172000" />
+      <workItem from="1746241944554" duration="119000" />
     </task>
     <servers />
   </component>
