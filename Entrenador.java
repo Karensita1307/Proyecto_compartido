@@ -13,6 +13,14 @@ public class Entrenador {
         return obtenerSiguientePokemon();
     }
     
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setEquipo(List<Pokemon> equipo) {
+        this.equipo = equipo;
+    }
+
     public String getNombre() {
         return nombre;
     }

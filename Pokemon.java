@@ -74,4 +74,7 @@ public class Pokemon {
     public String toString() {
         return nombre + " (" + tipo + ", HP: " + hp + ")";
     }
+
 }
+
+

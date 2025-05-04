@@ -66,7 +66,7 @@ public class Main {
         sc.close();
     }
 
-    private static List<Pokemon> crearEquipo(Scanner sc) {
+    public static List<Pokemon> crearEquipo(Scanner sc) {
         List<Pokemon> equipo = new ArrayList<>();
         System.out.print("¿Quieres un equipo aleatorio? (si/no): ");
         String respuesta = sc.nextLine().toLowerCase();

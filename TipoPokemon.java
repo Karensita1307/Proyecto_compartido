@@ -4,7 +4,7 @@ public enum TipoPokemon {
     public double calcularVentajaContra(TipoPokemon enemigo) {
         switch (this) {
             case FUEGO:
-                return (enemigo == PLANTA) ? 1.3 : 1.0;
+                return (enemigo == PLANTA) ? 1.3 : 1.0; //? es para indicar que si se cumple la condicion se ejecuta lo de la izquierda y si no lo de la derecha
             case AGUA:
                 return (enemigo == FUEGO || enemigo == TIERRA) ? 1.3 : 1.0;
             case PLANTA:
