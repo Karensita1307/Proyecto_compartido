@@ -20,4 +20,9 @@ public class Ataque {
     public int getPotencia() {
         return potencia;
     }
+
+    @Override
+    public String toString() {
+        return nombre + " (" + tipoDanio + ", Potencia: " + potencia + ")";
+    }
 }

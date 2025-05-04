@@ -3,6 +3,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JOptionPane;
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JComboBox;
 
@@ -27,33 +28,95 @@ public class App extends JFrame {
     GeneradorAleatorio equip1, equip2;
     Pokemon ataquesPoke1, ataquesPoke2;
 
-    public void VentanaAleatorio() {
-        // creamos una nueva ventana para hacer la batalla
-        JFrame nuevaVentana = new JFrame();
+public void VentanaAleatorio() {
+    // Crear ventana
+    JFrame nuevaVentana = new JFrame("Batalla Pokémon");
+    nuevaVentana.setLayout(new FlowLayout());
+    nuevaVentana.setSize(750, 600);
+    nuevaVentana.setLocationRelativeTo(null);
+    nuevaVentana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    ImageIcon icono = new ImageIcon(getClass().getResource("/Images/icon.svg.png"));
+    nuevaVentana.setIconImage(icono.getImage());
 
-        //Diseño del container
-        container2 = getContentPane(); //Obtenemos panel principal
-        container2.setLayout(new FlowLayout()); //Posicion de items, izq o drc
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Cerrar programa
-        setSize(750, 600);
-    
-        //organizamos la estetica claro que si
-        setLocationRelativeTo(null); // Centrada
-        setTitle("¡Batalla Pokémon!");
+    // Panel principal
+    container2 = nuevaVentana.getContentPane();
+    container2.setLayout(new BoxLayout(container2, BoxLayout.Y_AXIS));
 
-        ImageIcon icono = new ImageIcon(getClass().getResource("/Images/icon.svg.png")); //Cambio de icono para que se vea más pro
-        setIconImage(icono.getImage());
- 
-        mensaje1 = new JLabel("Entrenadores, ¡Que empiece la batalla!");
-        container2.add(mensaje1);
+    // Elementos de texto
+    JLabel infoBatalla = new JLabel();
+    JLabel estadoPoke1 = new JLabel();
+    JLabel estadoPoke2 = new JLabel();
 
-        Pokemon poke1 = entrenador1.elegirPokemon();
-        Pokemon poke2 = entrenador2.elegirPokemon();
-        
-         setVisible(true);
- 
+    // ComboBox y botón
+    JComboBox<Ataque> comboAtaques = new JComboBox<>();
+    JButton botonAtacar = new JButton("¡Atacar!");
+
+    // Control del combate
+    final boolean[] turnoJugador1 = {true}; // Alterna turnos
+    final Pokemon[] poke1 = {entrenador1.elegirPokemon()};
+    final Pokemon[] poke2 = {entrenador2.elegirPokemon()};
+
+    // Método para actualizar la UI según el turno
+    Runnable actualizarUI = () -> {
+        if (poke1[0] == null || poke2[0] == null) {
+            String ganador = (poke1[0] != null) ? entrenador1.getNombre() : entrenador2.getNombre();
+            JOptionPane.showMessageDialog(nuevaVentana, "¡" + ganador + " gana la batalla!");
+            nuevaVentana.dispose();
+            return;
+        }
+
+        infoBatalla.setText("Turno de: " + (turnoJugador1[0] ? entrenador1.getNombre() : entrenador2.getNombre()));
+        estadoPoke1.setText(poke1[0].getNombre() + " - HP: " + poke1[0].getHp());
+        estadoPoke2.setText(poke2[0].getNombre() + " - HP: " + poke2[0].getHp());
+
+        // Cargar ataques del Pokémon que va a atacar
+        Pokemon atacante = turnoJugador1[0] ? poke1[0] : poke2[0];
+        comboAtaques.removeAllItems();
+        for (Ataque atk : atacante.getAtaques()) {
+            comboAtaques.addItem(atk);
+        }
     };
 
+    // Acción del botón de ataque
+    botonAtacar.addActionListener(e -> {
+        Pokemon atacante = turnoJugador1[0] ? poke1[0] : poke2[0];
+        Pokemon defensor = turnoJugador1[0] ? poke2[0] : poke1[0];
+
+        Ataque ataqueSeleccionado = (Ataque) comboAtaques.getSelectedItem();
+        if (ataqueSeleccionado != null) {
+            atacante.atacar(defensor, ataqueSeleccionado);
+            JOptionPane.showMessageDialog(nuevaVentana,
+                atacante.getNombre() + " usó " + ataqueSeleccionado.getNombre() +
+                " contra " + defensor.getNombre());
+
+            // Verificar si el defensor fue derrotado
+            if (!defensor.estaVivo()) {
+                JOptionPane.showMessageDialog(nuevaVentana, defensor.getNombre() + " ha sido derrotado.");
+                if (turnoJugador1[0]) {
+                    poke2[0] = entrenador2.obtenerSiguientePokemon();
+                } else {
+                    poke1[0] = entrenador1.obtenerSiguientePokemon();
+                }
+            }
+
+            // Cambiar turno
+            turnoJugador1[0] = !turnoJugador1[0];
+            actualizarUI.run();
+        }
+    });
+
+    // Agregar elementos al panel
+    container2.add(infoBatalla);
+    container2.add(estadoPoke1);
+    container2.add(estadoPoke2);
+    container2.add(new JLabel("Selecciona un ataque:"));
+    container2.add(comboAtaques);
+    container2.add(botonAtacar);
+
+    // Mostrar
+    nuevaVentana.setVisible(true);
+    actualizarUI.run(); // Inicializar
+}
 
     public void guardarInfoAlea() {
         //Obtenemos nombres
@@ -80,8 +143,8 @@ public class App extends JFrame {
         String t2 = "Entrenador 2: " +entrenador2.getNombre() + "\n" +equipoTexto2;
         JOptionPane.showMessageDialog(container, t1);
         JOptionPane.showMessageDialog(container, t2);
-        Entrenador entrenador1 = new Entrenador(nombre1, equipo1);
-        Entrenador entrenador2 = new Entrenador(nombre2, equipo2);
+
+
 
 
     }
