@@ -11,6 +11,7 @@ public class Pokemon {
     private int defensaEspecial;
     private int velocidad;
 
+    // Contructor
     public Pokemon(String nombre, TipoPokemon tipo, int hp, int ataque, int defensa,
                    int ataqueEspecial, int defensaEspecial, int velocidad, List<Ataque> ataques) {
         if (hp <= 0 || ataques == null || ataques.isEmpty())
@@ -63,16 +64,13 @@ public class Pokemon {
         return ataques;
     }
 
-    public int getAtaque() {
-        return ataque;
-    }
     public int getDefensa() { return defensa; }
-    public int getAtaqueEspecial() { return ataqueEspecial; }
     public int getDefensaEspecial() { return defensaEspecial; }
     public int getVelocidad() { return velocidad; }
-    @Override
+
+    // Convertir a String
     public String toString() {
-        return nombre + " (" + tipo + ", HP: " + hp + ")";
+        return nombre + " (" + tipo + ", HP: " + hp + ", Velocidad: " +velocidad +")";
     }
 
 }

@@ -3,12 +3,14 @@ public class Ataque {
     private String tipoDanio;
     private int potencia;
 
+    // Contructor
     public Ataque(String nombre, String tipoDanio, int potencia) {
         this.nombre = nombre;
         this.tipoDanio = tipoDanio;
         this.potencia = potencia;
     }
 
+    // Getters
     public String getNombre() {
         return nombre;
     }
@@ -21,7 +23,7 @@ public class Ataque {
         return potencia;
     }
 
-    @Override
+    // Convertir a String
     public String toString() {
         return nombre + " (" + tipoDanio + ", Potencia: " + potencia + ")";
     }

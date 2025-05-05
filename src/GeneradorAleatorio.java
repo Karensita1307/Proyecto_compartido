@@ -3,7 +3,7 @@ import java.util.*;
 public class GeneradorAleatorio {
     private static final String[] nombresPokemon = {
             "Charmander", "Squirtle", "Bulbasaur", "Pikachu", "Sandshrew", "Pidgey",
-            "Growlithe", "Poliwag", "Oddish", "Magnemite", "Diglett", "Zubat"
+            "Growlithe", "Poliwag", "Oddish", "Magnemite", "Diglett", "Zubat", "Snorlax"
     };
 
     private static final String[] nombresAtaques = {
