@@ -4,16 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="61719a51-4d66-457d-9ab9-5bd617c11e1d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/App.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Ataque.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Entrenador.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/GeneradorAleatorio.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Images/icon.svg.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pokemon.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/TipoPokemon.java" beforeDir="false" />
-    </list>
+    <list default="true" id="61719a51-4d66-457d-9ab9-5bd617c11e1d" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -118,7 +109,7 @@
       <workItem from="1746386687409" duration="1043000" />
       <workItem from="1746387907160" duration="217000" />
       <workItem from="1746388284588" duration="1421000" />
-      <workItem from="1746389850983" duration="18341000" />
+      <workItem from="1746389850983" duration="18570000" />
     </task>
     <servers />
   </component>

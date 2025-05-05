@@ -302,5 +302,9 @@ public void VentanaAleatorio() {
     public static void main(String[] args){
         App app = new App();
     }
+    //-----------------------------------------------------------
+    //LINK DEL GITHUB
+    //https://github.com/Karensita1307/Proyecto_compartido.git
+    //Le dejamos el link aca porque no sabemos subirlo al campus, encontrara el proyecto en la rama karen/Miniproyecto2
 }
 
