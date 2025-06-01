@@ -1,9 +1,8 @@
 package vista;
 
+import controlador.ControladorPokemon;
 import java.util.List;
 import java.util.Scanner;
-
-import controlador.ControladorPokemon;
 import modelo.Ataque;
 import modelo.Entrenador;
 import modelo.GeneradorAleatorio;
@@ -19,6 +18,37 @@ public class VistaPokemonConsola implements VistaPokemon {
 
     @Override
     public void Menu() {
+        System.out.println("1. Empezar batalla");
+        System.out.println("2. Cambiar vista");
+        System.out.println("3. Salir");
+
+        int opcion = scanner.nextInt();
+        switch(opcion) {
+            case 1:
+            Scanner sc = new Scanner(System.in);
+            System.out.println("_____BATALLA DE POKEMONES_____");
+            System.out.print("Ingrese el nombre del primer entrenador: ");
+            String nombre1 = sc.nextLine();
+            List<Pokemon> equipo1 = GeneradorAleatorio.generarEquipoAleatorio();
+            Entrenador entrenador1 = new Entrenador(nombre1, equipo1);
+            System.out.print("Ingrese el nombre del segundo entrenador: ");
+            String nombre2 = sc.nextLine();
+            List<Pokemon> equipo2 = GeneradorAleatorio.generarEquipoAleatorio();
+            Entrenador entrenador2 = new Entrenador(nombre2, equipo2);
+    
+            System.out.println("--------------------------------------------");
+            System.out.println("Entrenadores, ¡Preparence!");
+            System.out.println("¡¡¡Que Empiece La Batalla!!!");
+
+            break;
+            case 2:
+            controlador.cambiarVista();
+            break;
+            case 3:
+            System.exit(0);
+            break;
+           
+        }
         Scanner sc = new Scanner(System.in);
         System.out.println("_____BATALLA DE POKEMONES_____");
         System.out.print("Ingrese el nombre del primer entrenador: ");
@@ -30,26 +60,7 @@ public class VistaPokemonConsola implements VistaPokemon {
         List<Pokemon> equipo2 = GeneradorAleatorio.generarEquipoAleatorio();
         Entrenador entrenador2 = new Entrenador(nombre2, equipo2);
 
-        System.out.println("1. Empezar batalla");
-        System.out.println("2. Cambiar vista");
-        System.out.println("3. Salir");
 
-        int opcion = scanner.nextInt();
-        switch(opcion) {
-            case 1:
-            System.out.println("--------------------------------------------");
-            System.out.println("Entrenadores, ¡Preparence!");
-            System.out.println("¡¡¡Que Empiece La Batalla!!!");
-
-            break;
-            case 2:
-            //controlador.cambiarVista();
-            break;
-            case 3:
-            System.exit(0);
-            break;
-           
-        }
     }
 
     public void batalla(Entrenador entrenador1, Entrenador entrenador2) {
@@ -107,13 +118,14 @@ public class VistaPokemonConsola implements VistaPokemon {
 
 
     private Ataque elegirAtaque(Object sc, Pokemon segundo) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'elegirAtaque'");
-    }
-
-    @Override
-    public void mostrarEstado(String estado) {
-        System.out.println("El estado de la matricula es:" + estado);
+        Scanner scanner = (Scanner) sc;
+        System.out.println("Elige un ataque:");
+        List<Ataque> ataques = segundo.getAtaques();
+        for (int i = 0; i < ataques.size(); i++) {
+            System.out.println((i + 1) + ". " + ataques.get(i).toString());
+        }
+        int opcion = scanner.nextInt();
+        return ataques.get(opcion - 1);
     }
 
     @Override
@@ -123,14 +135,16 @@ public class VistaPokemonConsola implements VistaPokemon {
 
     @Override
     public void setControlador(ControladorPokemon controlador) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setControlador'");
+        this.controlador = controlador;
     }
 
     @Override
     public void iniciar(ControladorPokemon controladorPokemon) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'iniciar'");
+        this.controlador = controladorPokemon;
+        Menu();
     }
+
+
+
     
 }

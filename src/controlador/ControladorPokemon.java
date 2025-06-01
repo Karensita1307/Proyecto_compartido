@@ -1,25 +1,22 @@
 package controlador;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import modelo.Entrenador;
-import modelo.Pokemon;
-import modelo.TipoPokemon;
-import modelo.Ataque;
-import modelo.GeneradorAleatorio;
-
 import vista.VistaPokemon;
 import vista.VistaPokemonConsola;
 import vista.VistaPokemonGUI;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class ControladorPokemon implements ActionListener {
     Entrenador entrenador1;
     Entrenador entrenador2;
     VistaPokemon vista;
+    private boolean esGui;
 
-    public ControladorPokemon(VistaPokemon vista) {
+    public ControladorPokemon(VistaPokemon vista, boolean esGui) {
         this.vista = vista;
+        this.vista.setControlador(this);
+        this.esGui = esGui;
     }
 
     public void setVista(VistaPokemon vista) {
@@ -37,5 +34,16 @@ public class ControladorPokemon implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 
+    }
+
+    public void cambiarVista() {
+        if (esGui) {
+            vista = new VistaPokemonConsola();
+        } else {
+            vista = new VistaPokemonGUI();
+        }
+        esGui = !esGui; 
+        vista.setControlador(this);
+        vista.Menu();
     }
 }

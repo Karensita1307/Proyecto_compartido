@@ -29,4 +29,6 @@ public class Ataque {
     public String toString() {
         return nombre + " (" + tipoDanio + ", Potencia: " + potencia + ")";
     }
+    
+
 }

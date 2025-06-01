@@ -1,36 +1,32 @@
 package vista;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import javax.swing.JTextField;
-import javax.swing.JComboBox;
-import javax.swing.JOptionPane;
-import javax.swing.ImageIcon;
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.BorderFactory;
-import javax.swing.JList;
-import java.awt.Container;
+import controlador.ControladorPokemon;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Graphics;
-import java.awt.Insets;
-import java.awt.Component;
 import java.awt.Image;
+import java.awt.Insets;
 import java.util.List;
-import java.awt.event.ActionListener;
-
+import javax.swing.BorderFactory;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import modelo.Ataque;
 import modelo.Entrenador;
 import modelo.GeneradorAleatorio;
 import modelo.Pokemon;
-import vista.VistaPokemon;
-
-import controlador.ControladorPokemon;
 
 public class VistaPokemonGUI extends JFrame implements VistaPokemon {
     //Items
@@ -42,6 +38,7 @@ public class VistaPokemonGUI extends JFrame implements VistaPokemon {
     JComboBox<Ataque> comboAtaques;
     Entrenador entrenador1, entrenador2;
     GeneradorAleatorio equip1, equip2;
+    private ControladorPokemon controlador;
 
 public void VentanaAleatorio() {
     // Ventana de la batalla
@@ -335,6 +332,7 @@ public void VentanaAleatorio() {
         confirm.setContentAreaFilled(true);
         confirm.setOpaque(true);
         confirm.addActionListener(e -> {
+            controlador.cambiarVista(); // Cambia a la vista de consola
         });
         fondo.add(confirm, c);
         setVisible(true);
@@ -347,25 +345,26 @@ public void VentanaAleatorio() {
 
     @Override
     public void Menu() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'Menu'");
-    }
-
-    @Override
-    public void mostrarEstado(String estado) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mostrarEstado'");
+        setVisible(true);
     }
 
     @Override
     public void mostrarMensaje(String mensaje) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'mostrarMensaje'");
+        JOptionPane.showMessageDialog(this, mensaje);
     }
 
     @Override
     public void setControlador(ControladorPokemon controlador) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setControlador'");
+        this.controlador = controlador;
     }
+
+    @Override
+    public void iniciar(ControladorPokemon controladorPokemon) {
+        this.controlador = controladorPokemon;
+        VentanaAleatorio(); // Iniciar la ventana de batalla
+    }
+
+
+
+
 }
