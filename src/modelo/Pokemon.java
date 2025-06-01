@@ -36,8 +36,8 @@ public class Pokemon {
         int danio = (int)(((double) ataque.getPotencia() * statAtaque / statDefensa) * ventaja);
         objetivo.recibirDanio(danio);
 
-        System.out.println(this.nombre + " usa " + ataque.getNombre() + " contra " + objetivo.getNombre()
-                + " causando " + danio + " de daño (Ventaja: " + ventaja + ")");
+        System.out.println("\n------"+ this.nombre + " usa " + ataque.getNombre() + " contra " + objetivo.getNombre()
+                + " causando " + danio + " de daño (Ventaja: " + ventaja + ")" + "------\n"); 
     }
 
     public void recibirDanio(int cantidad) {

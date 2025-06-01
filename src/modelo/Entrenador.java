@@ -1,5 +1,6 @@
 package modelo;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Entrenador {
     private String nombre;
@@ -7,7 +8,7 @@ public class Entrenador {
 
     public Entrenador(String nombre, List<Pokemon> equipo) {
         this.nombre = nombre;
-        this.equipo = equipo;
+        this.equipo = (equipo != null) ? equipo : new ArrayList<>();
     }
 
     public Pokemon elegirPokemon() {

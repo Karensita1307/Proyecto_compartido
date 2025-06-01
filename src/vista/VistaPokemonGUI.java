@@ -279,6 +279,11 @@ public void VentanaAleatorio() {
         entrenador1 = new Entrenador(" ", null);
         equip1 = new GeneradorAleatorio();
 
+        c.gridx = 0;
+        c.gridy = 1;
+        c.gridwidth = 1; // Ocupa 1 columna
+        fondo.add(new JLabel("Entrenador 1:"), c);
+
         c.gridx = 1;
         c.gridy = 1;
         campoName1 = new JTextField(19);
@@ -292,6 +297,11 @@ public void VentanaAleatorio() {
         entrenador2 = new Entrenador(" ",null);
         equip2 = new GeneradorAleatorio();
 
+        c.gridx = 0;
+        c.gridy = 2;
+        c.gridwidth = 1; // Ocupa 1 columna
+        fondo.add(new JLabel("Entrenador 2:"), c);
+
         c.gridx = 1;
         c.gridy = 2;
         campoName2 = new JTextField(19);
@@ -303,6 +313,7 @@ public void VentanaAleatorio() {
 
         c.gridx = 0;
         c.gridy = 3;
+        c.gridwidth = 2; // Ocupa 2 columnas
         confirm = new JButton("Comenzar");
         confirm.setFocusPainted(false); // Quita borde feo cuando se hace clic
         confirm.setPreferredSize(new Dimension(150, 35)); // ancho, alto
@@ -322,6 +333,7 @@ public void VentanaAleatorio() {
 
         c.gridx = 0;
         c.gridy = 5;
+        c.gridwidth = 2; // Ocupa 2 columnas
         confirm = new JButton("Cambiar vista");
         confirm.setFocusPainted(false); // Quita borde feo cuando se hace clic
         confirm.setPreferredSize(new Dimension(155, 40)); // ancho, alto
@@ -339,18 +351,9 @@ public void VentanaAleatorio() {
         
     }
 
-    public static void main(String[] args) {
-        new VistaPokemonGUI(); // Iniciar la ventana
-    }
-
     @Override
     public void Menu() {
         setVisible(true);
-    }
-
-    @Override
-    public void mostrarMensaje(String mensaje) {
-        JOptionPane.showMessageDialog(this, mensaje);
     }
 
     @Override
@@ -361,10 +364,6 @@ public void VentanaAleatorio() {
     @Override
     public void iniciar(ControladorPokemon controladorPokemon) {
         this.controlador = controladorPokemon;
-        VentanaAleatorio(); // Iniciar la ventana de batalla
     }
-
-
-
 
 }
