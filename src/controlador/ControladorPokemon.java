@@ -1,7 +1,14 @@
 package controlador;
 
 import modelo.Entrenador;
+import modelo.Pokemon;
+import modelo.TipoPokemon;
+import modelo.Ataque;
+import modelo.GeneradorAleatorio;
+
 import vista.VistaPokemon;
+import vista.VistaPokemonConsola;
+import vista.VistaPokemonGUI;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
