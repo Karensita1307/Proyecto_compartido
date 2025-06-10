@@ -30,6 +30,9 @@ import modelo.Entrenador;
 import modelo.GeneradorAleatorio;
 import modelo.Pokemon;
 import modelo.ListaTurnos;
+import modelo.excepciones.AtaqueNoDisponibleException;
+import modelo.excepciones.PokemonDebilitadoException;
+
 import java.util.Stack;
 
 public class VistaPokemonGUI extends JFrame implements VistaPokemon {
@@ -166,17 +169,32 @@ public class VistaPokemonGUI extends JFrame implements VistaPokemon {
             //Usamos los Pokemon activos del arreglo, no los combos
             Pokemon atacante = turnoJugador1[0] ? poke1[0] : poke2[0];
             Pokemon defensor  = turnoJugador1[0] ? poke2[0] : poke1[0];
-
-            //Excepcion si Hp <= 0
-            if (!atacante.estaVivo()) {
-                JOptionPane.showMessageDialog(fondo1,
-                        atacante.getNombre() + " está debilitado, elige otro.");
-                return;
-            }
-
             //Obtenemos Ataque seleccionado
             Ataque ataqueSeleccionado = (Ataque) comboAtaques.getSelectedItem();
-            if (ataqueSeleccionado != null) { //Si ataqueSeleccionado no es vacio
+
+            //Excepcion si Hp <= 0
+            try{
+                if (!atacante.estaVivo()) {
+                    throw new PokemonDebilitadoException(atacante.getNombre() + " está debilitado, elige otro.");
+                }
+            } catch (PokemonDebilitadoException ex) {
+                JOptionPane.showMessageDialog(fondo1, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                return; //  Evita que se ejecute el siguientre try
+            }
+
+            try {
+                //Verificamos que el ataque se muestre en la lista
+                boolean ataqueValido = false;
+                for (Ataque a : atacante.getAtaques()) {
+                    if (a.getNombre().equals(ataqueSeleccionado.getNombre())) {
+                        ataqueValido = true;
+                        break;
+                    }
+                }
+                //Excepcion si ataque no pertenece a la lista
+                if (!ataqueValido) {
+                    throw new AtaqueNoDisponibleException("El ataque seleccionado no está disponible para este Pokémon.");
+                }
                 atacante.atacar(defensor, ataqueSeleccionado); //Realizar ataque
                 //Mensaje de ataque seleccionado
                 JOptionPane.showMessageDialog(fondo1,
@@ -206,6 +224,8 @@ public class VistaPokemonGUI extends JFrame implements VistaPokemon {
                 //Cambiar turno
                 turnoJugador1[0] = !turnoJugador1[0];
                 actualizarUI.run();
+            } catch (AtaqueNoDisponibleException ex) {
+                JOptionPane.showMessageDialog(fondo1, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         });
 
