@@ -179,22 +179,7 @@ public class VistaPokemonGUI extends JFrame implements VistaPokemon {
                 }
             } catch (PokemonDebilitadoException ex) {
                 JOptionPane.showMessageDialog(fondo1, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-                return; //  Evita que se ejecute el siguientre try
             }
-
-            try {
-                //Verificamos que el ataque se muestre en la lista
-                boolean ataqueValido = false;
-                for (Ataque a : atacante.getAtaques()) {
-                    if (a.getNombre().equals(ataqueSeleccionado.getNombre())) {
-                        ataqueValido = true;
-                        break;
-                    }
-                }
-                //Excepcion si ataque no pertenece a la lista
-                if (!ataqueValido) {
-                    throw new AtaqueNoDisponibleException("El ataque seleccionado no está disponible para este Pokémon.");
-                }
                 atacante.atacar(defensor, ataqueSeleccionado); //Realizar ataque
                 //Mensaje de ataque seleccionado
                 JOptionPane.showMessageDialog(fondo1,
@@ -224,9 +209,6 @@ public class VistaPokemonGUI extends JFrame implements VistaPokemon {
                 //Cambiar turno
                 turnoJugador1[0] = !turnoJugador1[0];
                 actualizarUI.run();
-            } catch (AtaqueNoDisponibleException ex) {
-                JOptionPane.showMessageDialog(fondo1, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            }
         });
 
         //Agregar elementos al panel
@@ -422,6 +404,24 @@ public class VistaPokemonGUI extends JFrame implements VistaPokemon {
             guardarInfoAlea(); //Seguir ejecutando esto
             VentanaAleatorio(); //Metodo que abre la nueva ventana
 
+        });
+        fondo.add(confirm, c);
+        setVisible(true);
+
+        c.gridx = 0;
+        c.gridy = 5;
+        c.gridwidth = 2; // Ocupa 2 columnas
+        confirm = new JButton("Cambiar vista");
+        confirm.setFocusPainted(false); // Quita borde feo cuando se hace clic
+        confirm.setPreferredSize(new Dimension(155, 40)); // ancho, alto
+        confirm.setBackground(new Color(0, 191, 255)); // Color de fondo
+        confirm.setForeground(Color.white); // Color del texto
+        confirm.setFont(new Font("Arial Black", Font.BOLD, 13));
+        confirm.setBorder(BorderFactory.createLineBorder(new Color(30, 144, 255), 4, true)); // Delineado
+        confirm.setContentAreaFilled(true);
+        confirm.setOpaque(true);
+        confirm.addActionListener(e -> {
+            controlador.cambiarVista(); // Cambia a la vista de consola
         });
         fondo.add(confirm, c);
         setVisible(true);

@@ -2,6 +2,7 @@ package controlador;
 
 import modelo.Entrenador;
 import vista.VistaPokemon;
+import vista.VistaPokemonConsola;
 import vista.VistaPokemonGUI;
 
 public class ControladorPokemon{
@@ -25,5 +26,16 @@ public class ControladorPokemon{
 
     public void inicializar(){
         vista.iniciar(this);
+    }
+
+    public void cambiarVista() {
+        if (esGui) {
+            vista = new VistaPokemonConsola();
+        } else {
+            vista = new VistaPokemonGUI();
+        }
+        esGui = !esGui;
+        vista.setControlador(this);
+        vista.Menu();
     }
 }

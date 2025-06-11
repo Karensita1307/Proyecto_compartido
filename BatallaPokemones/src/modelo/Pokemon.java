@@ -69,6 +69,8 @@ public class Pokemon {
         return ataques;
     }
 
+    public int getHp() { return hp; }
+
     public int getDefensa() { return defensa; }
 
     public int getDefensaEspecial() { return defensaEspecial; }
