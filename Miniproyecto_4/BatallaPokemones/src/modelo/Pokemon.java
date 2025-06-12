@@ -93,4 +93,19 @@ public int getAtaqueEspecial() {
     public String toString() {
         return nombre + " (" + tipo + ", HP: " + hp + ", Velocidad: " +velocidad +")";
     }
+    public String getResumenBatalla() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Nombre: ").append(nombre).append("\n");
+        sb.append("Tipo: ").append(tipo).append("\n");
+        sb.append("HP: ").append(hp).append("\n");
+        sb.append("Velocidad: ").append(velocidad).append("\n");
+        sb.append("Ataques:\n");
+        for (int i = 0; i < ataques.size(); i++) {
+            Ataque atk = ataques.get(i);
+            sb.append("  ").append(i + 1).append(". ").append(atk.getNombre())
+            .append(" (").append(atk.getTipoDanio())
+            .append(", Potencia: ").append(atk.getPotencia()).append(")\n");
+        }
+        return sb.toString();
+    }
 }

@@ -38,4 +38,5 @@ public class ControladorPokemon{
         vista.setControlador(this);
         vista.Menu();
     }
+    
 }

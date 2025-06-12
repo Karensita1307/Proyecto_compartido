@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -59,33 +60,132 @@ public class VistaPokemonGUI extends JFrame implements VistaPokemon {
     private Stack<String> historialMovimientos = new Stack<>();
     ListaTurnos listaTurnos = new ListaTurnos();
 
-    public void VentanaAleatorio(boolean esCargado) {
-        //Ventana de la batalla
-        nuevaVentana = new JFrame("¡Batalla Pokémon!"); // Titulo de container
-        nuevaVentana.setLayout(new GridBagLayout()); // Organizar items
-        nuevaVentana.setSize(750, 600); // Tamaño
-        nuevaVentana.setLocationRelativeTo(null); // Centrar la ventana
-        nuevaVentana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        public void VentanaAleatorio(boolean esCargado) {
+            //Ventana de la batalla
+            nuevaVentana = new JFrame("¡Batalla Pokémon!"); // Titulo 
+            nuevaVentana.setLayout(new GridBagLayout()); 
+            nuevaVentana.setSize(750, 600); 
+            nuevaVentana.setLocationRelativeTo(null); 
+            nuevaVentana.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        if (!esCargado) {
-            guardarInfoAlea(); // Solo generas Pokémon aleatorios si NO vienes de "cargar"
-    }
-        //Icono de container
-        ImageIcon icono1 = new ImageIcon(getClass().getResource("/Images/icon.svg.png"));
-        nuevaVentana.setIconImage(icono1.getImage());
-
-        //Imagen insana de fondo
-        JPanel fondo1 = new JPanel(){
-            Image imagen1 = new ImageIcon(getClass().getResource("/Images/fondo1.jpg")).getImage();
-
-            //Adaptar imagen
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                g.drawImage(imagen1, 0, 0, getWidth(), getHeight(), this);
+            if (!esCargado) {
+                guardarInfoAlea(); // Solo generas Pokémon aleatorios si NO vienes de "cargar"
             }
-        };
+
+            // Crear constraints y panel
+            GridBagConstraints constraints = new GridBagConstraints();
+            JPanel panel = new JPanel(new GridBagLayout());
+
+
+            JLabel tituloBatalla = new JLabel("Batalla Pokémon");
+            tituloBatalla.setFont(new Font("Arial", Font.BOLD, 24));
+            constraints.gridx = 0;
+            constraints.gridy = 0;
+            constraints.gridwidth = 2; // Ocupa dos columnas
+            constraints.anchor = GridBagConstraints.CENTER;
+            panel.add(tituloBatalla, constraints);
+
+
+            String nombreEntrenador1 = entrenador1.getNombre();
+            String nombreEntrenador2 = entrenador2.getNombre();
+            JLabel entrenadoresVS = new JLabel(nombreEntrenador1 + "     VS     " + nombreEntrenador2);
+            entrenadoresVS.setFont(new Font("Arial", Font.PLAIN, 18));
+            constraints.gridx = 0;
+            constraints.gridy = 1;
+            constraints.gridwidth = 2;
+            constraints.anchor = GridBagConstraints.CENTER;
+            panel.add(entrenadoresVS, constraints);
+
+
+
+            JPanel panelEntrenador1 = new JPanel();
+            panelEntrenador1.setLayout(new BoxLayout(panelEntrenador1, BoxLayout.Y_AXIS));
+            panelEntrenador1.add(new JLabel("Equipo de " + nombreEntrenador1));
+
+            for (Pokemon pokemon : entrenador1.getEquipo()) {
+                JLabel nombrePokemon = new JLabel(pokemon.getNombre());
+                JTextArea ataquesPokemon = new JTextArea();
+                StringBuilder ataquesTexto = new StringBuilder();
+                int contador = 0;
+
+                for (Ataque ataque : pokemon.getAtaques()) {
+                    ataquesTexto.append(ataque.getNombre()).append("\n");
+                    contador++;
+                    if (contador == 2) break; // Solo muestra los dos primeros ataques
+                }    
+
+                ataquesPokemon.setText(ataquesTexto.toString());
+                ataquesPokemon.setEditable(false);
+                panelEntrenador1.add(nombrePokemon);
+                panelEntrenador1.add(ataquesPokemon);
+            }
+
+            constraints.gridx = 0;
+            constraints.gridy = 2;
+            constraints.gridwidth = 1;
+            constraints.anchor = GridBagConstraints.CENTER;
+            panel.add(panelEntrenador1, constraints);
+
+            JPanel panelEntrenador2 = new JPanel();
+            panelEntrenador2.setLayout(new BoxLayout(panelEntrenador2, BoxLayout.Y_AXIS));
+            panelEntrenador2.add(new JLabel("Equipo de " + nombreEntrenador2));
+
+            for (Pokemon pokemon : entrenador2.getEquipo()) {
+                JLabel nombrePokemon = new JLabel(pokemon.getNombre());
+                JTextArea ataquesPokemon = new JTextArea();
+                StringBuilder ataquesTexto = new StringBuilder();
+                int contador = 0;
+
+                for (Ataque ataque : pokemon.getAtaques()) {
+                    ataquesTexto.append(ataque.getNombre()).append("\n");
+                    contador++;
+                    if (contador == 2) break;
+                }
+
+                ataquesPokemon.setText(ataquesTexto.toString());
+                ataquesPokemon.setEditable(false);
+                panelEntrenador2.add(nombrePokemon);
+                panelEntrenador2.add(ataquesPokemon);
+            }
+
+            constraints.gridx = 1;
+            constraints.gridy = 2;
+            constraints.gridwidth = 1;
+            constraints.anchor = GridBagConstraints.CENTER;
+            panel.add(panelEntrenador2, constraints);
+
+
+            //Imagen insana de fondo
+            JPanel fondo1 = new JPanel() {
+                Image imagen1 = new ImageIcon(getClass().getResource("/Images/fondo1.jpg")).getImage();
+
+                @Override
+                protected void paintComponent(Graphics g) {
+                    super.paintComponent(g);
+                    g.drawImage(imagen1, 0, 0, getWidth(), getHeight(), this);
+                }
+            };
+
+            // Usa GridBagLayout para que acepte paneles dentro
+            fondo1.setLayout(new GridBagLayout());
+
+            GridBagConstraints fondoConstraints = new GridBagConstraints();
+            fondoConstraints.gridx = 0;
+            fondoConstraints.gridy = 0;
+
+
+            fondo1.add(panel, fondoConstraints);
+
+
+            nuevaVentana.add(fondo1);
+
+            //Icono de container
+            ImageIcon icono1 = new ImageIcon(getClass().getResource("/Images/icon.svg.png"));
+            nuevaVentana.setIconImage(icono1.getImage());
+
 
         //Panel principal
+
         nuevaVentana.setContentPane(fondo1); //Cambiamos panel principal
         fondo1.setLayout(new GridBagLayout()); //Organizar items
 
@@ -150,8 +250,8 @@ public class VistaPokemonGUI extends JFrame implements VistaPokemon {
                         writer.println("HP:" + p.getHp());
                         writer.println("Ataque:" + p.getAtaque());
                         writer.println("Defensa:" + p.getDefensa());
-                        writer.println("AtaqueEspecial:" + p.getAtaqueEspecial()); // antes: getAtEspecial()
-                        writer.println("DefensaEspecial:" + p.getDefensaEspecial()); // antes: getDefEspecial()
+                        writer.println("AtaqueEspecial:" + p.getAtaqueEspecial()); 
+                        writer.println("DefensaEspecial:" + p.getDefensaEspecial()); 
                         writer.println("Velocidad:" + p.getVelocidad());
 
                         for (Ataque atk : p.getAtaques()) {
@@ -170,8 +270,8 @@ public class VistaPokemonGUI extends JFrame implements VistaPokemon {
                         writer.println("HP:" + p.getHp());
                         writer.println("Ataque:" + p.getAtaque());
                         writer.println("Defensa:" + p.getDefensa());
-                        writer.println("AtaqueEspecial:" + p.getAtaqueEspecial()); // antes: getAtEspecial()
-                        writer.println("DefensaEspecial:" + p.getDefensaEspecial()); // antes: getDefEspecial()
+                        writer.println("AtaqueEspecial:" + p.getAtaqueEspecial()); 
+                        writer.println("DefensaEspecial:" + p.getDefensaEspecial()); 
                         writer.println("Velocidad:" + p.getVelocidad());
 
                         for (Ataque atk : p.getAtaques()) {
@@ -194,7 +294,7 @@ public class VistaPokemonGUI extends JFrame implements VistaPokemon {
         final Pokemon[] poke1 = {entrenador1.elegirPokemon()};
         final Pokemon[] poke2 = {entrenador2.elegirPokemon()};
         final boolean[] esPrimerTurno = { true };
-        final boolean[] turnoJugador1 = { true }; //Valor inicial irrelevante, se sobrescribira
+        final boolean[] turnoJugador1 = { true }; 
 
         //Metodo para actualizar la UI según el turno
         Runnable actualizarUI = () -> {
@@ -214,7 +314,7 @@ public class VistaPokemonGUI extends JFrame implements VistaPokemon {
 
             botonAtacar.setEnabled(true);
 
-            //Se remueven items para agregarlos actualizados cada vez
+
             comboPokemon1.removeAllItems();
             comboPokemon2.removeAllItems();
 
@@ -227,11 +327,11 @@ public class VistaPokemonGUI extends JFrame implements VistaPokemon {
                 comboPokemon2.addItem(p);
             }
 
-            Pokemon atacante = turnoJugador1[0] ? poke1[0] : poke2[0]; //El atacante segun el turno actual
-            comboAtaques.removeAllItems(); //Limpiar lista anterior
+            Pokemon atacante = turnoJugador1[0] ? poke1[0] : poke2[0]; 
+            comboAtaques.removeAllItems(); 
             if (atacante != null) {
                 for (Ataque atk : atacante.getAtaques()) {
-                    comboAtaques.addItem(atk); //Cargar ataques del Pokemon en turno
+                    comboAtaques.addItem(atk); 
                 }
             }
         };
@@ -245,7 +345,6 @@ public class VistaPokemonGUI extends JFrame implements VistaPokemon {
 
         //Accion del botón de ataque
         botonAtacar.addActionListener(e -> {
-            //Guardamos los Pokemon seleccionados como los iniciales
             Pokemon seleccionado1 = (Pokemon) comboPokemon1.getSelectedItem();
             Pokemon seleccionado2 = (Pokemon) comboPokemon2.getSelectedItem();
 
@@ -254,10 +353,10 @@ public class VistaPokemonGUI extends JFrame implements VistaPokemon {
 
             if (esPrimerTurno[0]) {
                 turnoJugador1[0] = poke1[0].getVelocidad() >= poke2[0].getVelocidad();
-                esPrimerTurno[0] = false; //Ya no es el primer turno
+                esPrimerTurno[0] = false; 
             }
 
-            //Usamos los Pokemon activos del arreglo, no los combos
+
             Pokemon atacante = turnoJugador1[0] ? poke1[0] : poke2[0];
             Pokemon defensor  = turnoJugador1[0] ? poke2[0] : poke1[0];
             //Obtenemos Ataque seleccionado
@@ -288,7 +387,7 @@ public class VistaPokemonGUI extends JFrame implements VistaPokemon {
                     actualizarHistorial();
                     turnoJugador1[0] = !turnoJugador1[0];
                     actualizarUI.run();
-                    return; // Salimos del metodo
+                    return; 
                 }
 
                 turnoJugador1[0] = !turnoJugador1[0];
@@ -300,7 +399,7 @@ public class VistaPokemonGUI extends JFrame implements VistaPokemon {
 
         //Agregar elementos al panel
         GridBagConstraints c = new GridBagConstraints();
-        c.insets = new Insets(10, 10, 10, 10); // Espaciado entre elementos
+        c.insets = new Insets(10, 10, 10, 10); 
 
         //Decoracion seleccionar ataque
         c.gridx = 0;
@@ -354,29 +453,29 @@ public class VistaPokemonGUI extends JFrame implements VistaPokemon {
         fondo1.add(botonAtacar, c);
 
 
-        c.gridx = 1; // En la misma fila, columna siguiente al botón de atacar
+        c.gridx = 1; 
         c.gridy = 3;
         fondo1.add(botonGuardar, c);
 
         //Mostrar
         nuevaVentana.setVisible(true);
-        actualizarUI.run(); //Inicializar
+        actualizarUI.run(); 
     }
 
     public void guardarInfoAlea() {
-        //Obtenemos nombres
+
         String nombre1 = campoName1.getText();
         String nombre2 = campoName2.getText();
         entrenador1.setNombre(nombre1);
         entrenador2.setNombre(nombre2);
 
-        //Generamos equipo random
+
         List<Pokemon> equipo1 = equip1.generarEquipoAleatorio();
         List <Pokemon> equipo2 = equip2.generarEquipoAleatorio();
         entrenador1.setEquipo(equipo1);
         entrenador2.setEquipo(equipo2);
 
-        //Organizar cadena de texto
+
         StringBuilder equipoTexto1 = new StringBuilder(); //Se usa StringBuilder para ahorrar recursos
         for (Pokemon p : entrenador1.getEquipo()) {
             equipoTexto1.append(p.toString()).append("\n");
@@ -402,7 +501,7 @@ public class VistaPokemonGUI extends JFrame implements VistaPokemon {
     private void actualizarHistorial() {
         StringBuilder texto = new StringBuilder();
         for (String mov : historialMovimientos) {
-            texto.append(mov).append("\n"); //Agrega movimientos
+            texto.append(mov).append("\n"); 
         }
         areaHistorial.setText(texto.toString());
     }
@@ -413,7 +512,7 @@ public class VistaPokemonGUI extends JFrame implements VistaPokemon {
             for (Ataque atk : atacante.getAtaques()) {
                 comboAtaques.addItem(atk);
             }
-            botonAtacar.setEnabled(true); // Siempre habilitado, incluso si están muertos
+            botonAtacar.setEnabled(true); 
         }
     }
 
@@ -428,12 +527,12 @@ public class VistaPokemonGUI extends JFrame implements VistaPokemon {
             }
         };
         setContentPane(fondo); //Cambiamos panel principal
-        fondo.setLayout(new GridBagLayout()); //Organizar items
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Cerrar programa
+        fondo.setLayout(new GridBagLayout()); 
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
         setSize(750,600);
 
-        setLocationRelativeTo(null); //Centrar container
-        setTitle("¡Batalla Pokémon!"); // Titulo de container
+        setLocationRelativeTo(null); 
+        setTitle("¡Batalla Pokémon!"); 
 
         ImageIcon icono = new ImageIcon(getClass().getResource("/Images/icon.svg.png")); //Cambio de icono para que se vea más pro
         setIconImage(icono.getImage());
@@ -444,10 +543,10 @@ public class VistaPokemonGUI extends JFrame implements VistaPokemon {
         //Titulo
         c.gridx = 0;
         c.gridy = 0;
-        c.gridwidth = 2; //Ocupa 2 columnas
-        c.anchor = GridBagConstraints.CENTER; //Centrado
+        c.gridwidth = 2; 
+        c.anchor = GridBagConstraints.CENTER; 
         c.fill = GridBagConstraints.NONE; //Para que no se estire
-        c.insets = new Insets(10, 0, 20, 0); //Margen: top, left, bottom, right
+        c.insets = new Insets(10, 0, 20, 0); 
         tituloBienvenida = new JLabel("¡Bienvenidos!");
         tituloBienvenida.setFont(new Font("Arial Black", Font.BOLD, 45)); //Tamañno y tipo
         tituloBienvenida.setForeground(new Color(0, 191, 255)); //Color texto
@@ -460,15 +559,15 @@ public class VistaPokemonGUI extends JFrame implements VistaPokemon {
 
         c.gridx = 0;
         c.gridy = 1;
-        c.gridwidth = 1; //Ocupa 1 columna
+        c.gridwidth = 1; 
         fondo.add(new JLabel("Entrenador 1:"), c);
 
         c.gridx = 1;
         c.gridy = 1;
         campoName1 = new JTextField(19);
-        campoName1.setPreferredSize(new Dimension(200, 30)); // ancho, alto
+        campoName1.setPreferredSize(new Dimension(200, 30)); 
         campoName1.setForeground(Color.BLACK);
-        campoName1.setFont(new Font("Arial", Font.PLAIN, 12)); // Tamaño y tipo
+        campoName1.setFont(new Font("Arial", Font.PLAIN, 12)); 
         campoName1.setBorder(BorderFactory.createLineBorder(new Color(30, 144, 255), 2, true)); // Delineado
         fondo.add(campoName1, c);
 
@@ -478,33 +577,33 @@ public class VistaPokemonGUI extends JFrame implements VistaPokemon {
 
         c.gridx = 0;
         c.gridy = 2;
-        c.gridwidth = 1; //Ocupa 1 columna
+        c.gridwidth = 1; 
         fondo.add(new JLabel("Entrenador 2:"), c);
 
         c.gridx = 1;
         c.gridy = 2;
         campoName2 = new JTextField(19);
-        campoName2.setPreferredSize(new Dimension(200, 30)); //Ancho, alto
+        campoName2.setPreferredSize(new Dimension(200, 30)); 
         campoName2.setForeground(Color.BLACK);
-        campoName2.setFont(new Font("Arial", Font.PLAIN, 12)); //Tamaño y tipo
+        campoName2.setFont(new Font("Arial", Font.PLAIN, 12)); 
         campoName2.setBorder(BorderFactory.createLineBorder(new Color(30, 144, 255), 2, true)); //Delineado
         fondo.add(campoName2, c);
 
         c.gridx = 0;
         c.gridy = 3;
-        c.gridwidth = 2; //Ocupa 2 columnas
+        c.gridwidth = 2; 
         confirm = new JButton("Comenzar");
         confirm.setFocusPainted(false); //Quita borde feo cuando se hace clic
-        confirm.setPreferredSize(new Dimension(150, 35)); //Ancho, alto
-        confirm.setBackground(new Color(0, 191, 255)); //Color de fondo
-        confirm.setForeground(Color.white); //Color del texto
+        confirm.setPreferredSize(new Dimension(150, 35)); 
+        confirm.setBackground(new Color(0, 191, 255)); 
+        confirm.setForeground(Color.white); 
         confirm.setFont(new Font("Arial Black", Font.BOLD, 13));
         confirm.setBorder(BorderFactory.createLineBorder(new Color(30, 144, 255), 4, true)); //Delineado
         confirm.setContentAreaFilled(true);
         confirm.setOpaque(true);
         confirm.addActionListener(e -> {
-            guardarInfoAlea(); //Seguir ejecutando esto
-            VentanaAleatorio(true); //Metodo que abre la nueva ventana
+            guardarInfoAlea(); 
+            VentanaAleatorio(true); 
 
         });
         fondo.add(confirm, c);
@@ -512,15 +611,14 @@ public class VistaPokemonGUI extends JFrame implements VistaPokemon {
         // Botón Cargar
         c.gridx = 0;
         c.gridy = 4;
-        c.gridwidth = 2; // Ocupa 2 columnas
+        c.gridwidth = 2; 
         JButton botonCargar = new JButton("Cargar partida");
         botonCargar.setFocusPainted(false);
-        botonCargar.setPreferredSize(new Dimension(155, 40)); // ancho, alto
+        botonCargar.setPreferredSize(new Dimension(155, 40)); 
         botonCargar.setBackground(new Color(60, 179, 113)); // Verde suave
-        botonCargar.setForeground(Color.white); // Color del texto
+        botonCargar.setForeground(Color.white); 
         botonCargar.setFont(new Font("Arial Black", Font.BOLD, 13));
-        botonCargar.setBorder(BorderFactory.createLineBorder(new Color(46, 139, 87), 4, true)); // Delineado
-        botonCargar.setContentAreaFilled(true);
+        botonCargar.setBorder(BorderFactory.createLineBorder(new Color(46, 139, 87), 4, true)); 
         botonCargar.setOpaque(true);
         botonCargar.addActionListener(new ActionListener() {
             @Override
@@ -546,8 +644,8 @@ public class VistaPokemonGUI extends JFrame implements VistaPokemon {
                         else if (linea.startsWith("HP:")) hp = Integer.parseInt(linea.substring(3));
                         else if (linea.startsWith("Ataque:")) ataque = Integer.parseInt(linea.substring(7));
                         else if (linea.startsWith("Defensa:")) defensa = Integer.parseInt(linea.substring(8));
-                        else if (linea.startsWith("AtEspecial:")) ataqueEspecial = Integer.parseInt(linea.substring(11));
-                        else if (linea.startsWith("DefEspecial:")) defensaEspecial = Integer.parseInt(linea.substring(12));
+                        else if (linea.startsWith("AtaqueEspecial:")) ataqueEspecial = Integer.parseInt(linea.substring(15));
+                        else if (linea.startsWith("DefensaEspecial:")) defensaEspecial = Integer.parseInt(linea.substring(17));
                         else if (linea.startsWith("Velocidad:")) velocidad = Integer.parseInt(linea.substring(10));
                         else if (linea.startsWith("AtaqueNombre:")) {
                             String nomAtaque = linea.substring(13);
@@ -569,7 +667,7 @@ public class VistaPokemonGUI extends JFrame implements VistaPokemon {
                     entrenador2.setEquipo(equipo2);
 
                     JOptionPane.showMessageDialog(null, "Equipos cargados correctamente.");
-                    VentanaAleatorio(false); 
+                    VentanaAleatorio(true); 
 
                 } catch (IOException ex) {
                     JOptionPane.showMessageDialog(null, "Error al cargar los equipos: " + ex.getMessage());
@@ -580,12 +678,12 @@ public class VistaPokemonGUI extends JFrame implements VistaPokemon {
         setVisible(true);
         c.gridx = 0;
         c.gridy = 5;
-        c.gridwidth = 2; // Ocupa 2 columnas
+        c.gridwidth = 2; 
         confirm = new JButton("Cambiar vista");
         confirm.setFocusPainted(false); // Quita borde feo cuando se hace clic
-        confirm.setPreferredSize(new Dimension(155, 40)); // ancho, alto
-        confirm.setBackground(new Color(0, 191, 255)); // Color de fondo
-        confirm.setForeground(Color.white); // Color del texto
+        confirm.setPreferredSize(new Dimension(155, 40)); 
+        confirm.setBackground(new Color(0, 191, 255)); 
+        confirm.setForeground(Color.white); 
         confirm.setFont(new Font("Arial Black", Font.BOLD, 13));
         confirm.setBorder(BorderFactory.createLineBorder(new Color(30, 144, 255), 4, true)); // Delineado
         confirm.setContentAreaFilled(true);
