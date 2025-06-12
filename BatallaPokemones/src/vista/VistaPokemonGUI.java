@@ -34,6 +34,7 @@ import modelo.excepciones.AtaqueNoDisponibleException;
 import modelo.excepciones.PokemonDebilitadoException;
 
 import java.util.Stack;
+import java.util.function.Consumer;
 
 public class VistaPokemonGUI extends JFrame implements VistaPokemon {
     //Items
@@ -126,12 +127,21 @@ public class VistaPokemonGUI extends JFrame implements VistaPokemon {
 
         //Metodo para actualizar la UI según el turno
         Runnable actualizarUI = () -> {
-            if (poke1[0] == null || poke2[0] == null) { //Detecta si algun entrenador ya no tiene pokemones disponibles para la batalla
-                String ganador = (poke1[0] != null) ? entrenador1.getNombre() : entrenador2.getNombre(); //Se obtiene nombre del ganador
-                JOptionPane.showMessageDialog(fondo1, "¡" + ganador + " gana la batalla!"); //Mensaje de victoria
+            if (!entrenador1.tienePokemonVivos() || !entrenador2.tienePokemonVivos()) {
+                String ganador;
+                if (!entrenador1.tienePokemonVivos() && !entrenador2.tienePokemonVivos()) {
+                    ganador = "¡Empate!";
+                } else if (!entrenador1.tienePokemonVivos()) {
+                    ganador = entrenador2.getNombre() + " gana la batalla!";
+                } else {
+                    ganador = entrenador1.getNombre() + " gana la batalla!";
+                }
+                JOptionPane.showMessageDialog(fondo1, ganador);
                 nuevaVentana.dispose();
                 return;
             }
+
+            botonAtacar.setEnabled(true);
 
             //Se remueven items para agregarlos actualizados cada vez
             comboPokemon1.removeAllItems();
@@ -154,12 +164,22 @@ public class VistaPokemonGUI extends JFrame implements VistaPokemon {
                 }
             }
         };
+        comboPokemon1.addActionListener(e -> {
+            actualizarAtaquesSiAmbosSeleccionados((Pokemon) comboPokemon1.getSelectedItem(), (Pokemon) comboPokemon2.getSelectedItem());
+        });
+
+        comboPokemon2.addActionListener(e -> {
+            actualizarAtaquesSiAmbosSeleccionados((Pokemon) comboPokemon1.getSelectedItem(), (Pokemon) comboPokemon2.getSelectedItem());
+        });
 
         //Accion del botón de ataque
         botonAtacar.addActionListener(e -> {
             //Guardamos los Pokemon seleccionados como los iniciales
-            poke1[0] = (Pokemon) comboPokemon1.getSelectedItem();  //Jugador 1
-            poke2[0] = (Pokemon) comboPokemon2.getSelectedItem();  //Jugador 2
+            Pokemon seleccionado1 = (Pokemon) comboPokemon1.getSelectedItem();
+            Pokemon seleccionado2 = (Pokemon) comboPokemon2.getSelectedItem();
+
+            poke1[0] = seleccionado1;
+            poke2[0] = seleccionado2;
 
             if (esPrimerTurno[0]) {
                 turnoJugador1[0] = poke1[0].getVelocidad() >= poke2[0].getVelocidad();
@@ -176,10 +196,9 @@ public class VistaPokemonGUI extends JFrame implements VistaPokemon {
             try{
                 if (!atacante.estaVivo()) {
                     throw new PokemonDebilitadoException(atacante.getNombre() + " está debilitado, elige otro.");
+                } else if(!defensor.estaVivo()){
+                    throw new PokemonDebilitadoException(defensor.getNombre() + " está debilitado, elige otro.");
                 }
-            } catch (PokemonDebilitadoException ex) {
-                JOptionPane.showMessageDialog(fondo1, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            }
                 atacante.atacar(defensor, ataqueSeleccionado); //Realizar ataque
                 //Mensaje de ataque seleccionado
                 JOptionPane.showMessageDialog(fondo1,
@@ -194,21 +213,18 @@ public class VistaPokemonGUI extends JFrame implements VistaPokemon {
                 //Verificar si el defensor fue derrotado
                 if (!defensor.estaVivo()) {
                     JOptionPane.showMessageDialog(fondo1, defensor.getNombre() + " ha sido derrotado.");
-                    //Muerte ( Para pila )
-                    String muerte = defensor.getNombre() + " ha sido derrotado";
-                    historialMovimientos.push(muerte);
-                    actualizarHistorial(); //Metodo que actualiza el panel que muestra el historial
-                    // Cambiamos al siguiente Pokémon del entrenador correspondiente
-                    if (defensor == poke1[0]) {
-                        poke1[0] = entrenador1.obtenerSiguientePokemon();
-                    } else {
-                        poke2[0] = entrenador2.obtenerSiguientePokemon();
-                    }
+                    historialMovimientos.push(defensor.getNombre() + " ha sido derrotado");
+                    actualizarHistorial();
+                    turnoJugador1[0] = !turnoJugador1[0];
+                    actualizarUI.run();
+                    return; // Salimos del metodo
                 }
 
-                //Cambiar turno
                 turnoJugador1[0] = !turnoJugador1[0];
                 actualizarUI.run();
+            } catch (PokemonDebilitadoException ex) {
+                JOptionPane.showMessageDialog(fondo1, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
         });
 
         //Agregar elementos al panel
@@ -313,6 +329,16 @@ public class VistaPokemonGUI extends JFrame implements VistaPokemon {
             texto.append(mov).append("\n"); //Agrega movimientos
         }
         areaHistorial.setText(texto.toString());
+    }
+    private void actualizarAtaquesSiAmbosSeleccionados(Pokemon p1, Pokemon p2) {
+        if (p1 != null && p2 != null) {
+            comboAtaques.removeAllItems();
+            Pokemon atacante = (p1.getVelocidad() >= p2.getVelocidad()) ? p1 : p2;
+            for (Ataque atk : atacante.getAtaques()) {
+                comboAtaques.addItem(atk);
+            }
+            botonAtacar.setEnabled(true); // Siempre habilitado, incluso si están muertos
+        }
     }
 
     public VistaPokemonGUI() {

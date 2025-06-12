@@ -43,4 +43,12 @@ public class Entrenador {
         }
         return null; //Si ninguno esta vivo, devuelve null
     }
+
+    //Verificar si TODOS los pokemones siguen vivos
+    public boolean tienePokemonVivos() {
+        for (Pokemon p : equipo) {
+            if (p.estaVivo()) return true;
+        }
+        return false;
+    }
 }
